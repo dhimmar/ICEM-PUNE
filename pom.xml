@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.everifile.renovo.master</groupId>
+    <artifactId>renovo-master</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+    <name>renovo-master</name>
+    <scm>
+        <connection>scm:git:git@bitbucket.org:everifile/renovo.git</connection>
+        <developerConnection>scm:git:git@bitbucket.org:everifile/renovo.git</developerConnection>
+        <url>git@bitbucket.org:everifile/renovo.git</url>
+    </scm>
+
+    <!--
+    One thousand pardons!
+    This is a top-level POM to allow git checkouts of Renovo to build the sub projects.
+
+    Usage:
+      mvn -U clean package -P renovo-web -P deployer
+      mvn -U clean pacakge -P renovo-services
+      etc.
+
+    There is probably a much better way to do this, but I don't know what that is.
+    -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <url>http://artifactory.everifile.com/artifactory/plugins-release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>snapshots</id>
+            <url>http://artifactory.everifile.com/artifactory/plugins-snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>renovo-services</id>
+            <modules>
+                <module>renovo-services</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>renovo-web</id>
+            <modules>
+                <module>renovo-web</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>renovo-wsdlgen</id>
+            <modules>
+                <module>renovo-wsdlgen</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>keep-alive</id>
+            <modules>
+                <module>keep-alive</module>
+            </modules>
+        </profile>
+    </profiles>
+
+</project>
